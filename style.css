@@ -354,8 +354,22 @@ footer{background:var(--bg-alt);border-top:1px solid var(--border);padding:64px 
 /* ---------- responsive ---------- */
 @media (max-width:980px){
   .hero-visual{height:340px;margin-top:10px;}
-  nav.main-nav{display:none;}
-  .hamburger{display:flex;}
+
+  .hamburger{display:flex;align-items:center;justify-content:center;}
+
+  nav.main-nav{
+    display:none;
+    position:absolute;top:100%;left:0;right:0;   /* dropdown under the sticky header */
+    flex-direction:column;align-items:stretch;gap:0;
+    background:var(--bg-alt);
+    border-bottom:1px solid var(--border);
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+    padding:6px 28px 14px;
+  }
+  nav.main-nav.open{display:flex;}
+  nav.main-nav a{padding:14px 0;border-bottom:1px solid var(--border);}
+  nav.main-nav a:last-child{border-bottom:none;}
+  nav.main-nav a.active::after{display:none;}
 }
 @media (max-width:600px){
   .promo-band{padding:32px 22px;flex-direction:column;align-items:flex-start;}

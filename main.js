@@ -290,6 +290,18 @@ window.addEventListener("scroll", () => {
   header.classList.toggle("scrolled", window.scrollY > 10);
 }, {passive:true});
 
+/* ================= MOBILE MENU ================= */
+const menuToggle = document.getElementById("menuToggle");
+const mainNav = document.querySelector("nav.main-nav");
+
+function setMenu(open){
+  mainNav.classList.toggle("open", open);
+  menuToggle.setAttribute("aria-expanded", open);
+}
+menuToggle.addEventListener("click", () => setMenu(!mainNav.classList.contains("open")));
+mainNav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(false); });
+
 /* ================= INIT ================= */
 renderCategories();
 renderProducts("all");
