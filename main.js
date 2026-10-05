@@ -302,6 +302,54 @@ menuToggle.addEventListener("click", () => setMenu(!mainNav.classList.contains("
 mainNav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
 window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(false); });
 
+/* ================= HERO SLIDER ================= */
+(function(){
+  const slider = document.getElementById("heroSlider");
+  if(!slider) return;
+  const slides = slider.querySelectorAll(".hs-slide");
+  const dots = slider.querySelectorAll(".hs-dot");
+  let cur = 0, timer;
+
+  function show(i){
+    cur = (i + slides.length) % slides.length;
+    slides.forEach((s, n) => s.classList.toggle("active", n === cur));
+    dots.forEach((d, n) => d.classList.toggle("active", n === cur));
+  }
+  function stop(){ clearInterval(timer); }
+  function start(){
+    stop();
+    if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    timer = setInterval(() => show(cur + 1), 4500);
+  }
+  function go(i){ show(i); start(); }
+
+  document.getElementById("hsNext").addEventListener("click", () => go(cur + 1));
+  document.getElementById("hsPrev").addEventListener("click", () => go(cur - 1));
+  dots.forEach(d => d.addEventListener("click", () => go(parseInt(d.dataset.i))));
+
+  slider.addEventListener("mouseenter", stop);
+  slider.addEventListener("mouseleave", start);
+
+  /* swipe on touch screens */
+  let x0 = null;
+  slider.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; stop(); }, {passive:true});
+  slider.addEventListener("touchend", e => {
+    if(x0 !== null){
+      const dx = e.changedTouches[0].clientX - x0;
+      if(Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1)); else start();
+    }
+    x0 = null;
+  }, {passive:true});
+
+  /* keyboard arrows when slider is focused */
+  slider.addEventListener("keydown", e => {
+    if(e.key === "ArrowRight") go(cur + 1);
+    if(e.key === "ArrowLeft") go(cur - 1);
+  });
+
+  start();
+})();
+
 /* ================= INIT ================= */
 renderCategories();
 renderProducts("all");
