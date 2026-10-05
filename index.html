@@ -4,15 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TOP Computer — The Best IT Solution</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
     theme: {
-      screens: { 'sm': '600px', 'lg': '980px' }
+      screens: { 'sm': '600px', 'lg': '980px' },
+      extend: {
+        fontFamily: {
+          sans: ['var(--font-body)'],
+          display: ['var(--font-display)']
+        }
+      }
     }
   }
 </script>
@@ -35,7 +38,7 @@
       <a href="#kategori">Kategori</a>
       <a href="#produk">Produk</a>
       <a href="#kenapa">Kenapa Kami</a>
-      <a href="#tentang">Tentang Kami</a>
+      <a href="#aboutus">Tentang Kami</a>
       <a href="#lokasi">Lokasi</a>
       <a href="#kontak">Kontak</a>
     </nav>
