@@ -35,7 +35,6 @@ const PRODUCTS = [
   {name:"DDR5 16GB 5600 V-Gen", cat:"RAM", icon:"ram", price:4510000, old:null, tag:"best", badge:"Terlaris"},
   {name:"SSD Visipro 1 TB NVMe Turbo", cat:"Storage", icon:"ssd", price:3220000, old:null, tag:"new", badge:"Baru"},
   {name:"Epson Ecotank L3210", cat:"Printer", icon:"printer", price:2200000, old:null, tag:"best", badge:"Terlaris"},
-  {name:"DDR4 8 GB 3200 V-Gen ", cat:"RAM", icon:"ram", price:1200000, old:null, tag:"best", badge:"Terlaris"},
   {name:"Epson EB-X600 XGA 3600 Lumens", cat:"Projector", icon:"projector", price:6000000, old:null, tag:"best", badge:"Terlaris"},
   {name:"Epson EB-E600 XGA 3400 Lumens", cat:"Projector", icon:"projector", price:5450000, old:null, tag:"new", badge:"Baru"},
   {name:"Monitor LG 24U411B-B (144HZ)", cat:"Monitor", icon:"monitor", price:1400000, old:1500000, tag:"deal", badge:"Diskon"},
@@ -43,11 +42,6 @@ const PRODUCTS = [
   {name:"MSI Cyborg 15 9S7-15Q342-1239", cat:"Laptop", icon:"laptop", price:20499000, old:21999000, tag:"best", badge:"Terlaris"},
   {name:"Asus Vivobook 14 A1404VAP-VIPS3853M", cat:"Laptop", icon:"laptop", price:9999000, old:10200000, tag:"deal", badge:"Diskon"},
   {name:"Lenovo Yoga 7 2in1-83JQ007NID", cat:"Laptop", icon:"laptop", price:22100000, old:null, tag:"new", badge:"Baru"},
-  {name:"HP 14-em0531AU", cat:"Laptop", icon:"laptop", price:9900000, old:null, tag:"new", badge:"Baru"},
-  {name:"Axioo Hype 1 NBAXH1-D4N-041RX Grey", cat:"Laptop", icon:"laptop", price:3999000, old:null, tag:"new", badge:"Baru"},
-  {name:"Advan 360 G0 R33200,8+256,GRY+STY.PEN", cat:"Laptop", icon:"laptop", price:6799000, old:null, tag:"new", badge:"Baru"},
-  {name:"MSI Modern 15 9S7-15S111-475", cat:"Laptop", icon:"laptop", price:11499000, old:11899000, tag:"deal", badge:"Diskon"},
-  {name:"Lenovo LOQ 15ARP10E-83S000D1ID", cat:"Laptop", icon:"laptop", price:16700000, old:null, tag:"new", badge:"Baru"},
   {name:"TP-Link Archer C54 AC1200", cat:"Router", icon:"router", price:350000, old:null, tag:"new", badge:"Baru"},
   {name:"D-Link DES-1024D 24 Port", cat:"Router", icon:"router", price:510000, old:null, tag:"new", badge:"Baru"},
   {name:"PSU Infinity 550W RGB", cat:"Power Supply", icon:"psu", price:540000, old:600000, tag:"deal", badge:"Diskon"},
@@ -57,13 +51,11 @@ const PRODUCTS = [
   {name:"Mouse Logitech B100 USB", cat:"Mouse", icon:"headset", price:250000, old:null, tag:"best", badge:"Terlaris"},
   {name:"Mouse Fantech Crypto II VX7V2", cat:"Mouse", icon:"headset", price:130000, old:null, tag:"best", badge:"Terlaris"},
   {name:"Acer Predator Helios PHN16S-71-78UQ", cat:"Laptop", icon:"laptop", price:28499000, old:29999000, tag:"deal", badge:"Diskon"},
-  {name:"Monitor Samsung S24DG302EE", cat:"Monitor", icon:"monitor", price:1800000, old:1900000, tag:"deal", badge:"Diskon"},
-  {name:"Monitor Viewsonic 21.5' VA22E2-H", cat:"Monitor", icon:"monitor", price:950000, old:1000000, tag:"deal", badge:"Diskon"},
   {name:"SSD V-gen 1 TB Platinum SATA", cat:"Storage", icon:"ssd", price:3300000, old:3500000, tag:"deal", badge:"Diskon"}
   
 ];
 
-/* Pemetaan sub-kategori produk ke 8 kategori utama */
+/*  8 Kategori Utama */
 const MAIN_CAT = {
   "Printer":"Printer", "All-in-One PC":"All-in-One PC", "Projector":"Projector",
   "RAM":"RAM & Storage", "Storage":"RAM & Storage",
@@ -106,22 +98,97 @@ function renderCategories(){
 
 function badgeClass(tag){ return tag === "deal" ? "deal" : tag === "new" ? "new" : "best"; }
 
-let activeTag = "all", activeCat = "all";
+let activeTag = "all", activeCat = "all", activePrice = "all", activeSort = "default";
 
+const PRICE_RANGES = [
+  {key:"all",   label:"Semua harga",        min:0,    max:Infinity},
+  {key:"lt1",   label:"Di bawah Rp1 juta",  min:0,    max:1e6},
+  {key:"1-5",   label:"Rp1 – 5 juta",       min:1e6,  max:5e6},
+  {key:"5-10",  label:"Rp5 – 10 juta",      min:5e6,  max:10e6},
+  {key:"10-20", label:"Rp10 – 20 juta",     min:10e6, max:20e6},
+  {key:"gt20",  label:"Di atas Rp20 juta",  min:20e6, max:Infinity}
+];
+const SORTS = [
+  {key:"default",    label:"Rekomendasi"},
+  {key:"price-asc",  label:"Harga: terendah"},
+  {key:"price-desc", label:"Harga: tertinggi"},
+  {key:"discount",   label:"Diskon terbesar"},
+  {key:"name",       label:"Nama: A–Z"}
+];
+const discountPct = p => p.old ? (p.old - p.price) / p.old : 0;
+
+function sortList(list){
+  const l = list.slice();
+  if(activeSort === "price-asc") l.sort((a,b) => a.price - b.price);
+  else if(activeSort === "price-desc") l.sort((a,b) => b.price - a.price);
+  else if(activeSort === "discount") l.sort((a,b) => discountPct(b) - discountPct(a));
+  else if(activeSort === "name") l.sort((a,b) => a.name.localeCompare(b.name, "id"));
+  return l;
+}
+
+/* Gambar Products */
+const PRODUCT_IMAGES = {
+  "MSI Cyborg 15 9S7-15Q342-1239": "images/msi-cyborg-15-1239.png",
+  "Asus Vivobook 14 A1404VAP-VIPS3853M": "images/asus-vivobook-14-a1404vap.png",
+  "Epson EcoTank L3251": "images/epson_l3251.jpg",
+  "Aio Advan I5 A-8S2 (I5-1235U+8+256GB)": "images/aio_advan_onepci5.jpg",
+  "Aio Asus P440VAK-W3852W": "images/aio_asus_p440vak.jpg",
+  "Aio Lenovo N100-F0JN0011ID": "images/aio_lenovo11id.jpg",
+  "DDR5 16GB 5600 V-Gen": "images/ddr5_vgen16gb.jpg",
+  "SSD Visipro 1 TB NVMe Turbo": "images/ssd_visipro_1tb.jpg",
+  "Epson Ecotank L3210": "images/epson_l3210.jpg",
+  "Epson EB-X600 XGA 3600 Lumens": "images/epson_eb_x600.jpg",
+  "Epson EB-E600 XGA 3400 Lumens": "images/epson_eb_e600.jpg",
+  "Monitor LG 24U411B-B (144HZ)": "images/lg_24u411b.jpg",
+  "Headset Fantech Chief II HG20": "images/fantech_chief_ii_hg20.jpg",
+  "TP-Link Archer C54 AC1200": "images/tplink_c54_ac1200.jpg",
+  "D-Link DES-1024D 24 Port": "images/dlink_des_1024d.jpg",
+  "PSU Infinity 550W RGB": "images/psu_infinity_550w.jpg",
+  "Canon G2010 Ink Tank": "images/canon_g2010.png",
+  "HP Smart Tank 583": "images/hp_583.jpg",
+  "HP Smart Tank 523": "images/hp_523.jpg",
+  "Mouse Logitech B100 USB": "images/logitech_b100.jpg",
+  "Mouse Fantech Crypto II VX7V2": "images/fantech_crypto.jpg",
+  "Acer Predator Helios PHN16S-71-78UQ": "images/acer_predator_78uq.png",
+  "SSD V-gen 1 TB Platinum SATA": "images/ssd_vgen_1tb.jpg",
+  "Headset Fantech Chief II HG20": "images/fantech_chief.jpg",
+  "Lenovo Yoga 7 2in1-83JQ007NID": "images/lenovo_yoga_7NID.jpg",
+  "Mouse Logitech B100 USB": "images/logitech_b100.png"
+};
+const imgSrc = p => p.img || PRODUCT_IMAGES[p.name] || "";
+function mediaOf(p){
+  const src = imgSrc(p);
+  return src
+    ? `<img class="prod-img" src="${src}" alt="${p.name}" loading="lazy" data-icon="${p.icon}">`
+    : iconSvg(p.icon);
+}
+/* jika file gambar tidak ditemukan, kembali ke ikon */
+document.addEventListener("error", e => {
+  const img = e.target;
+  if(img && img.tagName === "IMG" && img.classList.contains("prod-img")){
+    img.parentElement.classList.remove("has-img");
+    img.outerHTML = iconSvg(img.dataset.icon);
+  }
+}, true);
+
+/* ---- kartu produk ---- */
 function productCard(p){
   const idx = PRODUCTS.indexOf(p);
   return `
-    <div class="prod-card">
-      <div class="prod-media">
+    <div class="prod-card" data-idx="${idx}">
+      <div class="prod-media${imgSrc(p) ? " has-img" : ""}">
         <span class="badge ${badgeClass(p.tag)}">${p.badge}</span>
-        ${iconSvg(p.icon)}
+        ${mediaOf(p)}
       </div>
       <div class="prod-body">
         <div class="prod-cat">${p.cat}</div>
-        <div class="prod-name">${p.name}</div>
+        <div class="prod-name" role="button" tabindex="0" aria-label="Lihat detail ${p.name}">${p.name}</div>
         <div class="prod-price-row">
           <span class="prod-price">${money(p.price)}</span>
           ${p.old ? `<span class="prod-old">${money(p.old)}</span>` : ""}
+        </div>
+        <div class="prod-detail-hint">Lihat spesifikasi &amp; garansi
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
         </div>
         <button class="add-btn" data-idx="${idx}">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
@@ -133,17 +200,33 @@ function productCard(p){
 
 function mountProducts(list, emptyMsg){
   const grid = document.getElementById("prodGrid");
+  document.getElementById("resultCount").textContent = `Menampilkan ${list.length} dari ${PRODUCTS.length} produk`;
   if(!list.length){
-    grid.innerHTML = `<p style="grid-column:1/-1;color:var(--text-muted);padding:40px 0;text-align:center;">${emptyMsg}</p>`;
+    grid.innerHTML = `<div style="grid-column:1/-1;color:var(--text-muted);padding:40px 0;text-align:center;">
+      <p>${emptyMsg}</p>
+      <button type="button" class="tb-reset" data-reset style="margin-top:14px;">Reset filter</button>
+    </div>`;
     return;
   }
   grid.innerHTML = list.map(productCard).join("");
-  grid.querySelectorAll(".add-btn").forEach(btn => {
-    btn.addEventListener("click", () => addToCart(parseInt(btn.dataset.idx)));
-  });
 }
 
-/* filter kategori utama (chip) */
+/* satu listener untuk seluruh grid: tombol keranjang vs buka detail */
+document.getElementById("prodGrid").addEventListener("click", e => {
+  if(e.target.closest("[data-reset]")){ resetFilters(); return; }
+  const add = e.target.closest(".add-btn");
+  if(add){ addToCart(parseInt(add.dataset.idx)); return; }
+  const card = e.target.closest(".prod-card");
+  if(card) openProduct(parseInt(card.dataset.idx));
+});
+document.getElementById("prodGrid").addEventListener("keydown", e => {
+  if((e.key === "Enter" || e.key === " ") && e.target.matches(".prod-name")){
+    e.preventDefault();
+    openProduct(parseInt(e.target.closest(".prod-card").dataset.idx));
+  }
+});
+
+/* ---- filter kategori utama (chip) ---- */
 function renderCatFilter(){
   const wrap = document.getElementById("catFilter");
   const chip = (key, label, icon, count) => `
@@ -161,26 +244,182 @@ function setCategory(cat){
   renderProducts();
 }
 
-function renderProducts(filter){
-  if(filter !== undefined) activeTag = filter;
-  const list = PRODUCTS.filter(p =>
-    (activeTag === "all" || p.tag === activeTag) &&
-    (activeCat === "all" || mainCatOf(p) === activeCat)
-  );
-  mountProducts(list, "Tidak ada produk ditemukan untuk filter ini.");
+/* ---- filter harga & urutan ---- */
+function renderToolbar(){
+  document.getElementById("priceFilter").innerHTML =
+    PRICE_RANGES.map(r => `<option value="${r.key}">${r.label}</option>`).join("");
+  document.getElementById("sortSelect").innerHTML =
+    SORTS.map(s => `<option value="${s.key}">${s.label}</option>`).join("");
 }
-
-function renderSearch(term){
-  const list = PRODUCTS.filter(p => p.name.toLowerCase().includes(term) || p.cat.toLowerCase().includes(term) || mainCatOf(p).toLowerCase().includes(term));
-  document.querySelectorAll(".tab-btn, .cat-chip").forEach(b => b.classList.remove("active"));
-  mountProducts(list, `Tidak ada produk yang cocok dengan "${term}".`);
+function syncControls(){
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.filter === activeTag));
+  document.getElementById("priceFilter").value = activePrice;
+  document.getElementById("sortSelect").value = activeSort;
+  renderCatFilter();
 }
+function resetFilters(){
+  activeTag = "all"; activeCat = "all"; activePrice = "all"; activeSort = "default";
+  document.getElementById("searchInput").value = "";
+  syncControls();
+  renderProducts();
+}
+document.getElementById("priceFilter").addEventListener("change", e => { activePrice = e.target.value; renderProducts(); });
+document.getElementById("sortSelect").addEventListener("change", e => { activeSort = e.target.value; renderProducts(); });
+document.getElementById("resetFilters").addEventListener("click", resetFilters);
 
 document.getElementById("catFilter").addEventListener("click", e => {
   const btn = e.target.closest(".cat-chip");
   if(!btn) return;
   setCategory(btn.dataset.cat);
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.filter === activeTag));
+});
+
+function renderProducts(filter){
+  if(filter !== undefined) activeTag = filter;
+  const range = PRICE_RANGES.find(r => r.key === activePrice) || PRICE_RANGES[0];
+  const list = sortList(PRODUCTS.filter(p =>
+    (activeTag === "all" || p.tag === activeTag) &&
+    (activeCat === "all" || mainCatOf(p) === activeCat) &&
+    p.price >= range.min && p.price < range.max
+  ));
+  mountProducts(list, "Tidak ada produk yang cocok dengan filter ini.");
+}
+
+function renderSearch(term){
+  const list = sortList(PRODUCTS.filter(p =>
+    p.name.toLowerCase().includes(term) || p.cat.toLowerCase().includes(term) || mainCatOf(p).toLowerCase().includes(term)
+  ));
+  document.querySelectorAll(".tab-btn, .cat-chip").forEach(b => b.classList.remove("active"));
+  mountProducts(list, `Tidak ada produk yang cocok dengan "${term}".`);
+}
+
+/* ================= DETAIL PRODUK (POPUP) ================= */
+const DESC = {
+  "Epson EcoTank L3251": "Printer all-in-one ink tank dari Epson yang bisa mencetak, memindai (scan), dan menyalin (fotokopi) dalam satu perangkat. Sistem tangki tinta membuat biaya cetak per halaman jauh lebih hemat dibanding printer cartridge biasa. Mendukung koneksi USB dan Wi-Fi sehingga bisa mencetak langsung dari laptop maupun HP, dengan ukuran kertas hingga A4. Cocok untuk kebutuhan rumah, sekolah, dan usaha kecil dengan volume cetak rutin.",
+  "Aio Advan I5 A-8S2 (I5-1235U+8+256GB)": "I5-1235U/8GB /256GB SSD /24 FHD/W11/FREE WIRELESS KB & MOUSE/SILVER",
+  "Aio Asus P440VAK-W3852W": "All-in-One PC dari Asus dengan kode model P440VAK-W3852W. Desain all-in-one menyatukan layar dan komputer dalam satu perangkat, jadi hemat tempat dan praktis dipasang di meja kasir, ruang kantor, ruang kelas, atau rumah. Untuk rincian prosesor, RAM, dan penyimpanan pada varian ini, silakan tanyakan ke toko agar sesuai dengan stok yang tersedia.",
+  "Aio Lenovo N100-F0JN0011ID": "All-in-One PC dari Lenovo dengan prosesor Intel N100 (kode model F0JN0011ID). Prosesor N100 hemat daya, cocok untuk pekerjaan ringan hingga menengah seperti mengetik, spreadsheet, browsing, dan kebutuhan administrasi di kantor, sekolah, atau toko. Bodi all-in-one membuat tampilan meja lebih rapi dan praktis.",
+  "DDR5 16GB 5600 V-Gen": "Modul memori RAM DDR5 berkapasitas 16 GB dengan kecepatan 5600 dari V-Gen. DDR5 adalah standar memori generasi terbaru dengan bandwidth lebih tinggi dan efisiensi daya lebih baik dibanding DDR4, sehingga membantu performa multitasking, kerja kreatif, dan gaming. Pastikan motherboard atau laptop kamu mendukung DDR5 dan tipe modulnya sesuai (desktop atau laptop) sebelum membeli.",
+  "SSD Visipro 1 TB NVMe Turbo": "SSD berkapasitas 1 TB dari Visipro dengan antarmuka NVMe. NVMe jauh lebih cepat dibanding hard disk maupun SSD SATA untuk menyalakan sistem operasi, membuka aplikasi, dan memindahkan file berukuran besar. Cocok untuk upgrade PC atau laptop yang memiliki slot M.2 NVMe, jadi pastikan perangkatmu kompatibel.",
+  "Epson Ecotank L3210": "Printer all-in-one ink tank dari Epson dengan fungsi cetak, scan, dan fotokopi, serta sistem tangki tinta yang membuat biaya cetak per halaman lebih hemat. Terhubung lewat kabel USB dan mendukung kertas hingga ukuran A4. Pilihan praktis dan ekonomis untuk rumah, sekolah, maupun usaha kecil yang sering mencetak dokumen.",
+  "Epson EB-X600 XGA 3600 Lumens": "Proyektor Epson dengan resolusi XGA (1024 × 768) dan kecerahan 3.600 lumens. Tingkat kecerahan ini cukup terang untuk dipakai di ruang meeting, ruang kelas, dan ruang pelatihan tanpa harus mematikan semua lampu. Cocok untuk presentasi kantor, pembelajaran, dan penayangan materi dokumen maupun slide.",
+  "Epson EB-E600 XGA 3400 Lumens": "Proyektor Epson dengan resolusi XGA (1024 × 768) dan kecerahan 3.400 lumens. Terang dan nyaman dipakai untuk presentasi di ruang meeting, kelas, maupun ruang serbaguna dengan pencahayaan ruangan yang normal. Pilihan yang pas untuk kebutuhan kantor dan sekolah.",
+  "Monitor LG 24U411B-B (144HZ)": "Monitor 24 inci dari LG dengan refresh rate 144 Hz. Refresh rate tinggi membuat pergerakan di layar tampak jauh lebih halus dibanding monitor 60 Hz, sangat terasa saat bermain game kompetitif, tetapi juga nyaman untuk scrolling dan kerja harian. Ukuran 24 inci pas untuk meja kerja standar dan setup gaming.",
+  "Headset Fantech Chief II HG20": "Headset gaming dari Fantech seri Chief II (model HG20). Dirancang untuk kebutuhan bermain game, streaming, dan meeting online, dengan desain yang nyaman dipakai dalam waktu lama. Pilihan terjangkau untuk melengkapi setup gaming maupun kerja dari rumah.",
+  "MSI Cyborg 15 9S7-15Q342-1239": "Laptop gaming dari MSI seri Cyborg 15 dengan kode model 9S7-15Q342-1239. Seri Cyborg ditujukan untuk gamer dan pengguna yang membutuhkan performa lebih besar untuk game modern, editing video, desain, dan pekerjaan berat lainnya, dengan layar sekitar 15 inci yang masih nyaman dibawa. Silakan tanyakan ke toko untuk rincian prosesor, kartu grafis, RAM, dan penyimpanan pada varian ini.",
+  "Asus Vivobook 14 A1404VAP-VIPS3853M": "Laptop 14 inci dari Asus seri Vivobook (kode model A1404VAP-VIPS3853M). Ukuran 14 inci membuatnya ringkas dan mudah dibawa ke kampus maupun kantor, dengan performa yang pas untuk kerja dokumen, kuliah, meeting online, dan hiburan sehari-hari. Tanyakan ke toko untuk rincian prosesor, RAM, dan penyimpanan pada varian ini.",
+  "Lenovo Yoga 7 2in1-83JQ007NID": "Laptop 2-in-1 premium dari Lenovo seri Yoga 7 (kode model 83JQ007NID). Desain convertible membuat layarnya bisa dipakai sebagai laptop biasa maupun dalam mode tablet atau presentasi, ideal untuk mencatat, menggambar, dan bekerja secara fleksibel. Cocok untuk profesional dan mahasiswa yang menginginkan laptop serbaguna dan stylish.",
+  "TP-Link Archer C54 AC1200": "Wireless router dual-band AC1200 dari TP-Link. Mendukung dua pita frekuensi, 2,4 GHz untuk jangkauan lebih luas dan 5 GHz untuk koneksi lebih cepat dan minim gangguan, sehingga cocok untuk streaming, video call, dan browsing di rumah atau kantor kecil dengan banyak perangkat.",
+  "D-Link DES-1024D 24 Port": "Switch jaringan 24 port dari D-Link untuk memperbanyak koneksi kabel LAN. Cocok untuk kantor, sekolah, warnet, atau toko yang perlu menghubungkan banyak komputer, printer, dan perangkat jaringan lain dalam satu jaringan.",
+  "PSU Infinity 550W RGB": "Power supply (PSU) berdaya 550 W dengan lampu RGB dari Infinity. Cocok untuk PC kantor hingga PC gaming kelas menengah yang tidak terlalu haus daya. Pastikan total kebutuhan daya komponen PC kamu, terutama kartu grafis, sesuai dengan kapasitas PSU ini.",
+  "Canon G2010 Ink Tank": "Printer all-in-one ink tank dari Canon dengan fungsi cetak, scan, dan fotokopi. Sistem tangki tinta membuat biaya cetak per halaman lebih hemat, dan koneksi USB membuatnya mudah dipasang ke laptop atau PC. Cocok untuk rumah, sekolah, dan usaha kecil dengan kebutuhan cetak yang rutin.",
+  "HP Smart Tank 583": "Printer ink tank seri Smart Tank dari HP dengan tangki tinta yang terintegrasi, sehingga isi ulang tinta mudah dan biaya cetak per halaman lebih hemat dibanding printer cartridge. Cocok untuk kebutuhan cetak rutin di rumah, sekolah, atau usaha kecil. Untuk detail fungsi dan konektivitas varian ini, silakan tanyakan ke toko.",
+  "HP Smart Tank 523": "Printer ink tank seri Smart Tank dari HP dengan tangki tinta yang terintegrasi, sehingga isi ulang tinta mudah dan biaya cetak per halaman lebih hemat. Pilihan ekonomis untuk kebutuhan cetak harian di rumah maupun usaha kecil. Untuk detail fungsi dan konektivitas varian ini, silakan tanyakan ke toko.",
+  "Mouse Logitech B100 USB": "Mouse kabel (wired) dari Logitech dengan koneksi USB. Tinggal colok ke komputer atau laptop tanpa perlu baterai, simpel, dan andal untuk kerja kantor, sekolah, dan penggunaan sehari-hari.",
+  "Mouse Fantech Crypto II VX7V2": "Mouse gaming dari Fantech seri Crypto II (model VX7V2). Dirancang untuk kebutuhan bermain game dengan kontrol yang presisi dan nyaman digenggam. Pilihan terjangkau untuk melengkapi setup gaming maupun kerja.",
+  "Acer Predator Helios PHN16S-71-78UQ": "Laptop gaming dari Acer seri Predator Helios (kode model PHN16S-71-78UQ). Seri Predator adalah lini gaming performa tinggi dari Acer, ditujukan untuk game berat, editing video, rendering, dan pekerjaan kreatif yang menuntut tenaga besar. Silakan tanyakan ke toko untuk rincian prosesor, kartu grafis, RAM, dan penyimpanan pada varian ini.",
+  "SSD V-gen 1 TB Platinum SATA": "SSD berkapasitas 1 TB dari V-Gen seri Platinum dengan antarmuka SATA. Jauh lebih cepat dibanding hard disk biasa dan kompatibel dengan banyak PC maupun laptop yang memiliki port SATA, sehingga cocok sebagai upgrade untuk mempercepat booting, membuka aplikasi, dan menyimpan data dalam jumlah besar."
+};
+const descOf = p => DESC[p.name] ||
+  `${p.name} adalah produk kategori ${mainCatOf(p)}. Untuk spesifikasi lengkap, silakan hubungi toko.`;
+
+/* Garansi */
+const WARRANTY = {
+  "Printer":       {term:"2 Tahun"},
+  "All-in-One PC": {term:"2 Tahun"},
+  "Projector":     {term:"2 Tahun"},
+  "RAM & Storage": {term:"3 Tahun"},
+  "Laptop":        {term:"2 Tahun"},
+  "Monitor":       {term:"2 Tahun"},
+  "Peripherals":   {term:"2 Tahun"},
+  "Networking":    {term:"1 Tahun"},
+  "Lainnya":       {term:"1 Tahun"}
+};
+
+const pm = document.getElementById("pm");
+const pmBody = document.getElementById("pmBody");
+const pmDialog = pm.querySelector(".pm-dialog");
+let pmIdx = null, pmLastFocus = null;
+
+function openProduct(idx){
+  const p = PRODUCTS[idx];
+  if(!p) return;
+  pmIdx = idx;
+  pmLastFocus = document.activeElement;
+  const w = WARRANTY[mainCatOf(p)] || WARRANTY["Lainnya"];
+  const save = p.old ? p.old - p.price : 0;
+  const pct = p.old ? Math.round(discountPct(p) * 100) : 0;
+  const wa = "https://wa.me/62895378142009?text=" + encodeURIComponent(`Halo TOP Computer, saya mau tanya produk: ${p.name}`);
+
+  pmBody.innerHTML = `
+    <div class="pm-grid">
+      <div class="pm-media${imgSrc(p) ? " has-img" : ""}">
+        <span class="badge ${badgeClass(p.tag)}">${p.badge}</span>
+        ${mediaOf(p)}
+      </div>
+      <div class="pm-info">
+        <div class="prod-cat">${mainCatOf(p)}</div>
+        <h3 id="pmTitle" class="pm-name">${p.name}</h3>
+        <div class="pm-price-row">
+          <span class="pm-price">${money(p.price)}</span>
+          ${p.old ? `<span class="prod-old">${money(p.old)}</span><span class="pm-save">Hemat ${money(save)} (${pct}%)</span>` : ""}
+        </div>
+
+        <h4 class="pm-h">Deskripsi &amp; Spesifikasi</h4>
+        <p class="pm-desc">${descOf(p)}</p>
+
+        <h4 class="pm-h">Garansi</h4>
+        <div class="pm-warranty">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+          <div>
+            <b>Garansi resmi ${w.term}</b>
+            <span>Garansi distributor resmi. Simpan nota pembelian sebagai bukti klaim.</span>
+          </div>
+        </div>
+
+        <p class="pm-note">Spesifikasi lengkap dan ketersediaan stok bisa dikonfirmasi langsung ke toko.</p>
+
+        <div class="pm-actions">
+          <button type="button" class="btn btn-primary" data-pm-add>Tambah ke Keranjang</button>
+          <a class="btn btn-outline" href="${wa}" target="_blank" rel="noopener noreferrer">Tanya via WhatsApp</a>
+        </div>
+      </div>
+    </div>`;
+
+  pm.classList.add("open");
+  pm.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  pmDialog.scrollTop = 0;
+  pmDialog.focus();
+}
+
+function closeProduct(){
+  if(!pm.classList.contains("open")) return;
+  pm.classList.remove("open");
+  pm.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  if(pmLastFocus && document.contains(pmLastFocus)) pmLastFocus.focus();
+  pmIdx = null;
+}
+
+pm.addEventListener("click", e => {
+  if(e.target.closest("[data-close]")){ closeProduct(); return; }
+  if(e.target.closest("[data-pm-add]")){
+    const idx = pmIdx;
+    closeProduct();
+    addToCart(idx);
+  }
+});
+document.addEventListener("keydown", e => {
+  if(!pm.classList.contains("open")) return;
+  if(e.key === "Escape"){ closeProduct(); return; }
+  if(e.key === "Tab"){ /* jaga fokus tetap di dalam popup */
+    const f = pmDialog.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+    if(!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if(e.shiftKey && (document.activeElement === first || document.activeElement === pmDialog)){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
 });
 
 /* ---- tabs ---- */
@@ -220,7 +459,7 @@ document.getElementById("testiNext").addEventListener("click", () => goTesti(tes
 document.getElementById("testiPrev").addEventListener("click", () => goTesti(testiIdx - 1));
 
 /* ================= CART ================= */
-let cart = []; // {idx, qty}
+let cart = [];
 
 function addToCart(idx){
   const existing = cart.find(c => c.idx === idx);
@@ -326,7 +565,7 @@ searchInput.addEventListener("input", () => {
   const term = searchInput.value.trim().toLowerCase();
   document.getElementById("produk").scrollIntoView({behavior:"smooth", block:"start"});
   if(term.length) renderSearch(term);
-  else { activeCat = "all"; renderCatFilter(); document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.filter === "all")); renderProducts("all"); }
+  else { activeTag = "all"; activeCat = "all"; syncControls(); renderProducts(); }
 });
 
 /* ================= PROMO FORM ================= */
@@ -404,7 +643,8 @@ window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(fa
 
 /* ================= INIT ================= */
 renderCategories();
-renderCatFilter();
+renderToolbar();
+syncControls();
 renderProducts("all");
 renderTestimonials();
 renderCart();

@@ -30,7 +30,7 @@
   <div class="nav-inner">
     <a href="#top" class="logo">
       <span class="mark">
-        <img src="images\logo_top_black.jpg" alt="Logo TOP Computer" width="32" height="32">
+        <img src="images/logo_top_black.jpg" alt="Logo TOP Computer" width="32" height="32">
       </span>
       TOP<span class="red">Computer</span>
     </a>
@@ -134,7 +134,7 @@
       <div>
         <h2 class="display text-[clamp(30px,3.4vw,44px)]">Jelajahi Kategori</h2>
       </div>
-      <p class="text-[var(--text-muted)] text-[15px] max-w-[420px]">Delapan kategori utama dengan ratusan pilihan produk bergaransi resmi, siap dibawa pulang hari ini.</p>
+      <p class="text-[var(--text-muted)] text-[15px] max-w-[420px]">Delapan kategori utama dengan ratusan puluhan produk bergaransi resmi, siap kamu borong hari ini.</p>
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="catGrid"></div>
   </div>
@@ -145,7 +145,6 @@
   <div class="max-w-[1240px] mx-auto px-[18px] sm:px-7">
     <div class="flex justify-between items-end gap-5 mb-10 flex-wrap">
       <div><h2 class="display text-[clamp(30px,3.4vw,44px)]">Pilihan Terbaik Minggu Ini</h2></div>
-      <p class="text-[var(--text-muted)] text-[15px] max-w-[420px]">Diperbarui setiap minggu berdasarkan yang paling dicari pelanggan TOP Computer.</p>
     </div>
     <div class="cat-filter-wrap">
       <div class="cat-filter-label" id="catFilterLabel">Kategori Utama</div>
@@ -156,6 +155,18 @@
       <button class="tab-btn" data-filter="best">Terlaris</button>
       <button class="tab-btn" data-filter="new">Baru Tiba</button>
       <button class="tab-btn" data-filter="deal">Diskon Spesial</button>
+    </div>
+    <div class="shop-toolbar">
+      <div class="tb-field">
+        <label for="priceFilter">Rentang harga</label>
+        <select id="priceFilter"></select>
+      </div>
+      <div class="tb-field">
+        <label for="sortSelect">Urutkan</label>
+        <select id="sortSelect"></select>
+      </div>
+      <button type="button" class="tb-reset" id="resetFilters">Reset filter</button>
+      <p class="tb-count" id="resultCount" aria-live="polite"></p>
     </div>
     <div class="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-[18px]" id="prodGrid"></div>
   </div>
@@ -410,6 +421,17 @@
     <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;" id="checkoutBtn">Checkout via WhatsApp</a>
   </div>
 </aside>
+
+<!-- ============ PRODUCT DETAIL MODAL ============ -->
+<div class="pm" id="pm" aria-hidden="true">
+  <div class="pm-backdrop" data-close></div>
+  <div class="pm-dialog" role="dialog" aria-modal="true" aria-labelledby="pmTitle" tabindex="-1">
+    <button class="icon-btn pm-close" id="pmClose" data-close aria-label="Tutup detail produk">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="pmBody"></div>
+  </div>
+</div>
 
 <!-- ============ TOAST ============ -->
 <div class="toast" id="toast">

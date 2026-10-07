@@ -415,3 +415,94 @@ footer{background:var(--bg-alt);border-top:1px solid var(--border);padding:64px 
   .cat-filter{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;}
   .cat-chip{flex:none;}
 }
+
+
+/* ===== Toolbar harga & urutan ===== */
+.tab-row{margin-bottom:16px;}
+.shop-toolbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 14px;margin-bottom:26px;}
+.tb-field{display:flex;flex-direction:column;gap:6px;min-width:170px;}
+.tb-field label{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);}
+.tb-field select{
+  appearance:none;-webkit-appearance:none;font-family:inherit;font-size:14px;font-weight:600;color:var(--text);
+  background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a89aa0' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center/16px;
+  border:1px solid var(--border);border-radius:10px;padding:10px 38px 10px 14px;cursor:pointer;
+  transition:border-color .2s;
+}
+.tb-field select:hover,.tb-field select:focus-visible{border-color:var(--red-dim);outline:none;}
+.tb-field select option{background:var(--surface);color:var(--text);}
+.tb-reset{
+  font-family:inherit;font-size:13.5px;font-weight:700;color:var(--text-muted);background:transparent;
+  border:1px solid var(--border);border-radius:10px;padding:10px 16px;cursor:pointer;transition:border-color .2s,color .2s;
+}
+.tb-reset:hover,.tb-reset:focus-visible{border-color:var(--red);color:var(--red-bright);outline:none;}
+.tb-count{margin-left:auto;font-size:13px;color:var(--text-muted);align-self:center;}
+@media (max-width:600px){
+  .tb-field{flex:1 1 calc(50% - 7px);min-width:0;}
+  .tb-count{margin-left:0;flex-basis:100%;}
+}
+
+/* ===== Kartu produk bisa dibuka ===== */
+.prod-card{cursor:pointer;}
+.prod-name:focus-visible{outline:2px solid var(--red-bright);outline-offset:2px;border-radius:4px;}
+.prod-detail-hint{display:flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--red-bright);}
+.prod-detail-hint svg{width:13px;height:13px;transition:transform .2s;}
+.prod-card:hover .prod-detail-hint svg{transform:translateX(3px);}
+
+/* ===== Popup detail produk ===== */
+.pm{position:fixed;inset:0;z-index:250;display:none;align-items:center;justify-content:center;padding:16px;}
+.pm.open{display:flex;}
+.pm-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(3px);animation:pmFade .2s ease;}
+.pm-dialog{
+  position:relative;width:min(100%,860px);max-height:calc(100% - 8px);overflow-y:auto;outline:none;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);
+  box-shadow:0 30px 80px rgba(0,0,0,.55);animation:pmPop .25s cubic-bezier(.2,.8,.2,1);
+}
+.pm-close{position:absolute;top:10px;right:10px;z-index:2;background:var(--surface-2);}
+.pm-grid{display:grid;grid-template-columns:1fr;}
+.pm-media{
+  position:relative;display:flex;align-items:center;justify-content:center;min-height:200px;
+  background:linear-gradient(160deg,var(--bg-alt),var(--surface-2));border-bottom:1px solid var(--border);
+}
+.pm-media svg{width:96px;height:96px;color:var(--red-bright);filter:drop-shadow(0 8px 24px rgba(214,40,63,.4));}
+.pm-media .badge{position:absolute;top:14px;left:14px;}
+.pm-info{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;}
+.pm-name{font-family:var(--font-display);font-size:22px;font-weight:800;line-height:1.25;padding-right:36px;}
+.pm-price-row{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 10px;}
+.pm-price{font-family:var(--font-sub);font-size:28px;font-weight:800;}
+.pm-save{font-size:12px;font-weight:800;color:#fff;background:var(--red);padding:3px 9px;border-radius:20px;}
+.pm-h{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-top:10px;}
+.pm-specs{border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.pm-spec{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:10px 14px;font-size:14px;}
+.pm-spec + .pm-spec{border-top:1px solid var(--border);}
+.pm-spec:nth-child(odd){background:var(--bg-alt);}
+.pm-spec dt{color:var(--text-muted);font-weight:600;}
+.pm-spec dd{font-weight:700;}
+.pm-warranty{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid var(--red-dim);border-radius:10px;background:rgba(214,40,63,.08);}
+.pm-warranty svg{width:24px;height:24px;flex:none;color:var(--red-bright);}
+.pm-warranty b{display:block;font-size:15px;}
+.pm-warranty span{display:block;font-size:13px;color:var(--text-muted);margin-top:2px;}
+.pm-note{font-size:12.5px;color:var(--text-muted);}
+.pm-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+.pm-actions .btn{flex:1 1 200px;justify-content:center;}
+@media (min-width:980px){
+  .pm-grid{grid-template-columns:300px 1fr;}
+  .pm-media{border-bottom:none;border-right:1px solid var(--border);min-height:100%;}
+  .pm-media svg{width:120px;height:120px;}
+}
+@media (max-width:600px){
+  .pm{padding:0;align-items:flex-end;}
+  .pm-dialog{width:100%;max-height:92%;border-radius:var(--radius-m) var(--radius-m) 0 0;padding-bottom:env(safe-area-inset-bottom,0px);}
+  .pm-spec{grid-template-columns:110px 1fr;}
+}
+@keyframes pmFade{from{opacity:0}to{opacity:1}}
+@keyframes pmPop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.pm-backdrop,.pm-dialog{animation:none;}}
+
+.pm-desc{font-size:14.5px;line-height:1.7;color:var(--text);}
+
+/* ===== Gambar produk ===== */
+.prod-media,.pm-media{overflow:hidden;}
+.prod-media.has-img,.pm-media.has-img{background:#fff;}
+.prod-media img.prod-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:10px;}
+.pm-media img.prod-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:18px;}
+.prod-media.has-img .badge,.pm-media.has-img .badge{z-index:1;}
