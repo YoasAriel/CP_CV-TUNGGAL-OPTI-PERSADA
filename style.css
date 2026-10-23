@@ -204,7 +204,7 @@ section{position:relative;z-index:1;padding:86px 0;}
   text-transform:uppercase;letter-spacing:.02em;
 }
 .badge.deal{background:var(--red);color:#fff;}
-.badge.new{background:#fff;color:var(--bg);}
+.badge.new{background:#8fe196;color:var(--bg);}
 .badge.best{background:var(--surface-2);color:var(--red-bright);border:1px solid var(--red-dim);}
 .prod-body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1;}
 .prod-cat{font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.03em;}

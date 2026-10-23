@@ -66,10 +66,10 @@ const MAIN_CAT = {
 const mainCatOf = p => MAIN_CAT[p.cat] || "Lainnya";
 
 const TESTIMONIALS = [
-  {name:"Bimo Saputra", role:"Content Creator, Jogja", text:"Rakit PC edit video di sini, dikasih rekomendasi jujur sesuai budget. Hasilnya lancar buat render 4K."},
-  {name:"Ayu Kartika", role:"Mahasiswi UGM", text:"Beli laptop pertama buat kuliah, stafnya sabar jelasin spek sampai saya ngerti. Harga juga bersaing."},
-  {name:"Reza Pratama", role:"Gamer & Streamer", text:"Beli All-in-One PC dari sini, barang original dan garansi resminya jelas. Bakal balik lagi buat upgrade RAM."},
-  {name:"Dewi Anggraini", role:"Pemilik Warnet", text:"Langganan beli komponen buat warnet, pengiriman cepat dan selalu ready stock untuk pesanan banyak."}
+  {name:"Reza Pahlevi", role:"Freelancer", text:"Beli laptop di sini harganya sangat terjangkau dan terbaik. Salesnya juga ramah-ramah dan sangat membantu"},
+  {name:"Rizki Setiawan", role:"Artotel", text:"Beli CCTV dan perlengkapannya di sini, pengiriman cepat dan aman. Barang original dan garansi jelas."},
+  {name:"Ani Setyowati", role:"Pengusaha", text:"Beli All-in-One PC dari sini, barang original dan garansi resminya jelas. Bakal balik lagi buat upgrade device."},
+  {name:"Puji Rahayu", role:"Instansi Pemerintah", text:"Langganan beli komponen buat kantor, pengiriman cepat dan selalu ready stock untuk pesanan banyak."}
 ];
 
 /* ================= RENDER ================= */
