@@ -516,8 +516,8 @@ main.page-main > section.hero{padding-top:76px;}
 /* ---------- galeri kegiatan ---------- */
 .gallery{display:grid;gap:18px;grid-template-columns:1fr 1fr;}
 .g-item{position:relative;margin:0;border-radius:var(--radius-m);overflow:hidden;border:1px solid var(--border);background:var(--surface);}
-.g-video{grid-column:1/-1;aspect-ratio:16/9;}
-.g-video video{display:block;width:100%;height:100%;object-fit:cover;background:#000;}
+.g-video{grid-column:1/-1;aspect-ratio:16/9;width:100%;max-width:720px;justify-self:center;}
+.g-video video{display:block;width:100%;height:100%;object-fit:contain;background:#000;}
 .g-photo{aspect-ratio:16/10;}
 .g-btn{display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:zoom-in;}
 .g-btn img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
@@ -527,12 +527,6 @@ main.page-main > section.hero{padding-top:76px;}
 .g-cap-top{inset:12px auto auto 12px;bottom:auto;right:auto;padding:6px 12px;border-radius:999px;background:rgba(18,16,20,.72);backdrop-filter:blur(6px);font-size:12px;}
 @media (max-width:599px){
   .gallery{grid-template-columns:1fr;}
-}
-@media (min-width:980px){
-  .gallery{grid-template-columns:2.4fr 1fr;}
-  .g-video{grid-column:1;grid-row:1 / span 2;}
-  .g-photo{aspect-ratio:auto;}
-  .g-photo .g-btn{position:absolute;inset:0;}
 }
 
 /* ---------- lightbox ---------- */
@@ -558,3 +552,15 @@ main.page-main > section.hero{padding-top:76px;}
 @media (min-width:600px) and (max-width:979px){
   .g-row .g-row-item:first-child{flex:0 0 100%;max-width:420px;margin-inline:auto;}
 }
+
+/* ---------- brand & mitra (satu gambar) ---------- */
+.brand-wall{background:#d9d9d9;border-radius:var(--radius-m);overflow:hidden;}
+.brand-wall img{display:block;width:100%;max-width:1079px;height:auto;margin:0 auto;}
+@media (max-width:599px){
+  .brand-wall{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .brand-wall img{min-width:640px;}
+}
+
+/* ---------- logo Tunggal di kartu Tentang Kami ---------- */
+.ah-brand{display:flex;justify-content:center;padding:4px 0 20px;margin-bottom:6px;border-bottom:1px solid var(--border);}
+.ah-brand img{display:block;height:58px;width:auto;}
