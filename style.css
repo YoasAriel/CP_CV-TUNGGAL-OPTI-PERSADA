@@ -506,3 +506,55 @@ footer{background:var(--bg-alt);border-top:1px solid var(--border);padding:64px 
 .prod-media img.prod-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:10px;}
 .pm-media img.prod-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:18px;}
 .prod-media.has-img .badge,.pm-media.has-img .badge{z-index:1;}
+
+/* ---------- multi-halaman ---------- */
+body{display:flex;flex-direction:column;}
+main.page-main{flex:1 0 auto;min-height:60vh;position:relative;z-index:1;}
+main.page-main > section:first-child{padding-top:64px;}
+main.page-main > section.hero{padding-top:76px;}
+
+/* ---------- galeri kegiatan ---------- */
+.gallery{display:grid;gap:18px;grid-template-columns:1fr 1fr;}
+.g-item{position:relative;margin:0;border-radius:var(--radius-m);overflow:hidden;border:1px solid var(--border);background:var(--surface);}
+.g-video{grid-column:1/-1;aspect-ratio:16/9;}
+.g-video video{display:block;width:100%;height:100%;object-fit:cover;background:#000;}
+.g-photo{aspect-ratio:16/10;}
+.g-btn{display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:zoom-in;}
+.g-btn img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.g-btn:hover img,.g-btn:focus-visible img{transform:scale(1.04);}
+.g-btn:focus-visible{outline:2px solid var(--red-bright);outline-offset:-2px;}
+.g-cap{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 12px;font-size:13px;font-weight:600;color:#fff;background:linear-gradient(to top,rgba(18,16,20,.8),transparent);pointer-events:none;}
+.g-cap-top{inset:12px auto auto 12px;bottom:auto;right:auto;padding:6px 12px;border-radius:999px;background:rgba(18,16,20,.72);backdrop-filter:blur(6px);font-size:12px;}
+@media (max-width:599px){
+  .gallery{grid-template-columns:1fr;}
+}
+@media (min-width:980px){
+  .gallery{grid-template-columns:2.4fr 1fr;}
+  .g-video{grid-column:1;grid-row:1 / span 2;}
+  .g-photo{aspect-ratio:auto;}
+  .g-photo .g-btn{position:absolute;inset:0;}
+}
+
+/* ---------- lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px;}
+.lb.open{display:flex;}
+.lb-backdrop{position:absolute;inset:0;background:rgba(8,6,10,.88);}
+.lb-fig{position:relative;margin:0;max-width:min(1100px,100%);max-height:100%;display:flex;flex-direction:column;gap:12px;}
+.lb-fig img{display:block;max-width:100%;max-height:calc(100vh - 130px);width:auto;height:auto;border-radius:var(--radius-m);margin:0 auto;}
+.lb-fig figcaption{color:#fff;font-size:14px;text-align:center;}
+.lb-close{position:absolute;top:-8px;right:-8px;z-index:2;background:var(--surface);}
+@media (max-width:599px){ .lb{padding:14px;} .lb-close{top:6px;right:6px;} }
+
+/* ---------- galeri: sub-judul & baris foto ---------- */
+.g-sub{font-size:18px;font-weight:700;margin:0 0 16px;color:var(--text);display:flex;align-items:center;gap:10px;}
+.g-sub::before{content:"";width:4px;height:18px;border-radius:2px;background:var(--red-bright);}
+.g-sub-2{margin-top:44px;}
+.g-row{display:flex;flex-wrap:wrap;gap:18px;}
+.g-row .g-row-item{flex:1 1 100%;aspect-ratio:var(--ar);}
+@media (min-width:980px){
+  .g-row{flex-wrap:nowrap;}
+  .g-row .g-row-item{flex:var(--ar) 1 0;min-width:0;}
+}
+@media (min-width:600px) and (max-width:979px){
+  .g-row .g-row-item:first-child{flex:0 0 100%;max-width:420px;margin-inline:auto;}
+}

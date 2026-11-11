@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lokasi &amp; Kontak — TOP Computer</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      screens: { 'sm': '600px', 'lg': '980px' },
+      extend: {
+        fontFamily: {
+          display: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          sub: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          body: ['ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body>
+
+<div class="circuit-bg" aria-hidden="true"></div>
+
+<header id="siteHeader">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="mark">
+        <img src="images/logo_top_black.jpg" alt="Logo TOP Computer" width="32" height="32">
+      </span>
+      TOP<span class="red">Computer</span>
+    </a>
+    <nav class="main-nav" aria-label="Navigasi utama">
+      <a href="index.html">Beranda</a>
+      <a href="produk.html">Produk</a>
+      <a href="tentang-kami.html">Tentang Kami</a>
+      <a href="lokasi-kontak.html" class="active" aria-current="page">Lokasi &amp; Kontak</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn hamburger" id="menuToggle" aria-label="Buka menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+      <div class="search-box" id="searchBox">
+        <input type="text" id="searchInput" placeholder="Cari produk...">
+      </div>
+      <button class="icon-btn" id="searchToggle" aria-label="Cari produk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+      <button class="icon-btn" id="cartToggle" aria-label="Buka keranjang">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="page-main">
+<section id="lokasi">
+  <div class="max-w-[1240px] mx-auto px-[18px] sm:px-7">
+    <div class="flex justify-between items-end gap-5 mb-10 flex-wrap">
+      <div><h2 class="display text-[clamp(30px,3.4vw,44px)]">Lokasi Kami</h2></div>
+      <p class="text-[var(--text-muted)] text-[15px] max-w-[420px]">Enam cabang TOP Computer siap melayani kebutuhan IT kamu di berbagai kota.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
+      <div class="loc-card">
+        <div class="li-head">
+          <div class="li-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <h4>TOP Computer Magelang</h4>
+        </div>
+        <p class="loc-addr"><a href="https://maps.google.com/maps?vet=10CAAQoqAOahcKEwj4trb794iXAxUAAAAAHQAAAAAQBg..i&fvr=1&pvq=CgwvZy8xcHp0dnloeTIiEgoMdG9wIGNvbXB1dGVyEAIYAw&lqi=ChV0b3AgY29tcHV0ZXIgbWFnZWxhbmdIov-6nfuVgIAIWikQABABGAAYARgCIhV0b3AgY29tcHV0ZXIgbWFnZWxhbmcqBggCEAAQAZIBDmNvbXB1dGVyX3N0b3JlmgFEQ2k5RFFVbFJRVU52WkVOb2RIbGpSamx2VDIxNFRWcEhaekprUld4clpETmtlR1ZJWkVOVGJYaFVZVWRLYldSRlJSQUL6AQQIABBA&cs=1&um=1&ie=UTF-8&fb=1&gl=id&sa=X&ftid=0x2e7a85f69e69f28d:0x5c54abbfefef4b74" target="_blank" rel="noopener noreferrer">Jl. Majapahit No.436, Samban Lor, Gelangan, Kec. Magelang Tengah, Kota Magelang, Jawa Tengah 56112</a></p>
+        <a class="loc-phone" href="https://www.google.com/search?q=top+computer+magelang&sca_esv=8700bb1c457f55ce&sxsrf=APpeQntiBuKCsSzf3DUgj2Dd4PcnX6lT5Q%3A1790312062232&ei=fv61avPRDaCIjuMP_LGdkAU&biw=1280&bih=585&uact=5&oq=top+computer+magelang&gs_lp=Egxnd3Mtd2l6LXNlcnAiFXRvcCBjb21wdXRlciBtYWdlbGFuZzIEECMYJzIFEAAYgAQyBhAAGBYYHjIGEAAYFhgeSLAPULMJWP8NcAN4AZABAZgBswGgAboGqgEDNC40uAEDyAEA-AEBmAIKoAKwBcICChAAGEcY1gQYsAPCAggQABiABBjLAcICCxAAGIAEGMsBGLQHmAMAiAYBkAYIkgcDNy4zoAeQJbIHAzQuM7gHowXCBwUwLjcuM8gHG4AIAQ&sclient=gws-wiz-serp#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          0895-3781-42009
+        </a>
+        <p class="loc-hours">Senin–Sabtu: 08.00–19.00 WIB || Minggu: 10.00–17.00 WIB</p>
+      </div>
+      <div class="loc-card">
+        <div class="li-head">
+          <div class="li-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <h4>TOP Computer Semarang</h4>
+        </div>
+        <p class="loc-addr"><a href="https://www.google.com/maps/place/Top+Computer+Semarang+Erlangga/@-6.994347,110.4280735,17z/data=!3m1!4b1!4m6!3m5!1s0x2e708ca03903ba61:0xcb40757644f1e59d!8m2!3d-6.994347!4d110.4280735!16s%2Fg%2F11bv3mnxvc?entry=ttu&g_ep=EgoyMDI2MDkyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">Jl. Erlangga Timur No.11, Pleburan, Kec. Semarang Sel., Kota Semarang, Jawa Tengah 50241</a></p>
+        <a class="loc-phone" href="https://www.google.com/search?q=top+computer+semarang&sca_esv=8700bb1c457f55ce&biw=1280&bih=585&sxsrf=APpeQnutjVz0y1uRPDrISfJOqW5e2jxh9w%3A1790312103210&ei=p_61atiODKWeg8UPwr6IiAw&uact=5&oq=top+computer+semarang&gs_lp=Egxnd3Mtd2l6LXNlcnAiFXRvcCBjb21wdXRlciBzZW1hcmFuZzIEECMYJzILEC4YgAQYxwEYrwEyBRAAGIAEMggQABiABBjLATIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yAhAmSLgdUOAKWJkYcAF4AZABAJgBaaAB9QyqAQQyMC4xuAEDyAEA-AEBmAIWoALtDagCFMICBxAjGOoCGCfCAg0QIxjwBRjJAhjqAhgnwgIWEAAYgAQYigUYQxjnBhjqAhi0AtgBAcICHBAuGIAEGIoFGEMY5wYYxwEYrwEY6gIYtALYAQHCAhAQABgDGI8BGOoCGLQC2AEBwgIQEC4YAxiPARjqAhi0AtgBAcICEBAuGIAEGIoFGEMYxwEYrwHCAgoQABiABBiKBRhDwgIIEAAYgAQYsQPCAg4QABiABBiKBRiNBhixA8ICCBAAGIAEGLQHwgIOEC4YgAQYxwEYrwEYjgXCAgsQABiABBjLARi0B5gDB_EFQMe5HcY0tta6BgYIARABGAGSBwQyMS4xoAfOhAKyBwQyMC4xuAflDcIHBjAuNy4xNcgHUYAIAQ&sclient=gws-wiz-serp#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          0895-3590-41555
+        </a>
+        <p class="loc-hours">Senin–Sabtu: 08.45–20.00 WIB</p>
+      </div>
+      <div class="loc-card">
+        <div class="li-head">
+          <div class="li-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <h4>TOP Computer Temanggung</h4>
+        </div>
+        <p class="loc-addr"><a href="https://www.google.com/maps/place/Tunggal+Computer+Temanggung/data=!4m2!3m1!1s0x0:0xe3fc6332d5f695c0?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener noreferrer">Ruko PJKA, Jl. Sri Suwarno Blk no. 9, Banyuurip Tengah, Banyurip, Kec. Temanggung, Kabupaten Temanggung, Jawa Tengah 56211</a></p>
+        <a class="loc-phone" href="https://www.google.com/search?q=top+computer+temanggung&oq=top+computer+temanggung&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MgoIARAAGAoYFhge0gEIMzMzN2owajmoAgawAgHxBSCYHT0XPKqB&sourceid=chrome&source=chrome.ob&ie=UTF-8#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          0851-8475-4520
+        </a>
+        <p class="loc-hours">Senin–Sabtu: 08.00–16.00 WIB</p>
+      </div>
+      <div class="loc-card">
+        <div class="li-head">
+          <div class="li-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <h4>TOP Computer Yogyakarta</h4>
+        </div>
+        <p class="loc-addr"><a href="https://www.google.com/maps/place/Tunggal+Computer+Yogyakarta/data=!4m2!3m1!1s0x0:0xea772c8e1b3d56c2?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener noreferrer">Jl. Babarsari, Jl. Raya Janti No.15, Janti, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281</a></p>
+        <a class="loc-phone" href="https://www.google.com/search?q=top+computer+babarsari&sca_esv=8700bb1c457f55ce&biw=1280&bih=585&sxsrf=APpeQntZGPrJIhKoojdxYFZXU3EImXUC_w%3A1790312133636&ei=xf61aoy1Jv2Q4-EPuvKGyAw&gs_ssp=eJzj4tFP1zcsqCrOTo83SjFgtFI1qDBKNU80tUwzTDU0sEy2NLG0MqhITTQ3N0q2SDVMMk4xNUs28hIryS9QSM7PLSgtSS1SSEpMSiwqTizKBAB3yhgg&oq=top+computer+babar&gs_lp=Egxnd3Mtd2l6LXNlcnAiEnRvcCBjb21wdXRlciBiYWJhcioOCAAYgAQYxwEYrwEYjgUyDhAuGIAEGMcBGK8BGI4FMgYQABgWGB5IpiRQ9wpY3BtwAXgBkAEAmAFooAH6CqoBBDE3LjG4AQPIAQD4AQGYAhOgAtMLwgIKEAAYRxjWBBiwA8ICBBAjGCfCAhAQLhiABBiKBRhDGMcBGK8BwgIKEAAYgAQYigUYQ8ICCBAAGIAEGLEDwgIFEAAYgATCAg4QABiABBiKBRiNBhixA8ICCxAuGIAEGMcBGK8BwgIIEAAYgAQYtAfCAggQABiABBjLAcICCxAAGIAEGMsBGLQHwgIIEAAYFhgeGAqYAwCIBgGQBgiSBwQxNi4zoAeMzwGyBwQxNS4zuAfPC8IHBjAuNC4xNcgHPYAIAQ&sclient=gws-wiz-serp#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          0822-2037-6646
+        </a>
+        <p class="loc-hours">Senin–Sabtu: 08.00–20.00 WIB || Minggu: 10.00–18.00 WIB</p>
+      </div>
+      <div class="loc-card">
+        <div class="li-head">
+          <div class="li-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <h4>TOP Computer Solo</h4>
+        </div>
+        <p class="loc-addr"><a href="https://www.google.com/maps/place/TOP+COMPUTER+SOLO/data=!4m2!3m1!1s0x0:0xe2fd87eb34e90849?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener noreferrer">Jl. Widoro Kandang, RT.1/RW.1, Kratonan, Kec. Serengan, Kota Surakarta, Jawa Tengah 57153</a></p>
+        <a class="loc-phone" href="https://www.google.com/search?q=top+computer+solo&oq=top+computer+solo&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTINCAEQLhivARjHARiABDIHCAIQIRiPAtIBCDE3NTNqMGo5qAIGsAIB8QVo33Li0Kc1rQ&sourceid=chrome&source=chrome.ob&ie=UTF-8#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          0823-2700-4249
+        </a>
+        <p class="loc-hours">Senin–Jumat: 08.45–17.00 WIB || Sabtu: 08.45–14.00 WIB</p>
+      </div>
+      <div class="loc-card">
+        <div class="li-head">
+          <div class="li-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+          <h4>TOP Computer Purwokerto</h4>
+        </div>
+        <p class="loc-addr">Perum Bancar Kembar Estate B-5, Purwokerto</p>
+        <a class="loc-phone" href="" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          0822-2835-0688
+        </a>
+        <p class="loc-hours">Senin–Jumat: 09.00–17.00 WIB || Sabtu: 09.00–15.00 WIB</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kontak">
+  <div class="max-w-[1240px] mx-auto px-[18px] sm:px-7">
+    <div class="flex justify-between items-end gap-5 mb-10 flex-wrap">
+      <div><h2 class="display text-[clamp(30px,3.4vw,44px)]">Hubungi Kami</h2></div>
+      <p class="text-[var(--text-muted)] text-[15px] max-w-[420px]">Tanya produk, minta penawaran, atau konsultasi kebutuhan perlengkapan IT langsung ke tim kami.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[18px]">
+      <div class="loc-card">
+        <div class="li-head"><div class="li-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-7.5 7-12a7 7 0 1 0-14 0c0 4.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></div><h4>Kantor Pusat (HQ)</h4></div>
+        <p class="loc-addr">Jl. Majapahit No.436, Samban Lor, Gelangan, Kec. Magelang Tengah, Kota Magelang, Jawa Tengah 56112</p>
+        <a class="loc-phone" href="#lokasi">Lihat semua cabang</a>
+      </div>
+      <div class="loc-card">
+        <div class="li-head"><div class="li-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><h4>WhatsApp</h4></div>
+        <p class="loc-addr">Respon cepat untuk tanya stok, harga, dan penawaran.</p>
+        <a class="loc-phone" href="https://wa.me/62895378142009?text=Halo%20Tunggal%20Computer%2C%20saya%20mau%20tanya%20produk." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>0895-3781-42009</a>
+      </div>
+      <div class="loc-card">
+        <div class="li-head"><div class="li-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><h4>Jam Buka</h4></div>
+        <p class="loc-addr">Kantor pusat Magelang</p>
+        <p class="loc-hours">Senin–Jumat: 08.00–17.00 WIB</p>
+        <p class="loc-hours">Jam operasional tiap cabang bisa dilihat di bagian <a href="#lokasi" style="text-decoration:underline;">Lokasi Kami</a>.</p>
+      </div>
+    </div>
+    <div class="cta-row" style="margin-top:32px;">
+      <a href="https://wa.me/62895378142009?text=Halo%20Tunggal%20Computer%2C%20saya%20mau%20tanya%20produk." target="_blank" rel="noopener noreferrer" class="btn btn-primary">Chat via WhatsApp</a>
+      <a href="https://www.instagram.com/tunggalcomputer_magelang/" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Instagram</a>
+      <a href="https://www.tiktok.com/@tunggalid" target="_blank" rel="noopener noreferrer" class="btn btn-outline">TikTok</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="max-w-[1240px] mx-auto px-[18px] sm:px-7">
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] mb-12">
+      <div class="foot-col">
+        <div class="foot-logo">TOP <span style="color:var(--white-bright);">Computer</span><span style="color:var(--red-bright);"> | HQ</span></div>
+        <p>Jl. Majapahit No.436, Samban Lor, Gelangan, Kec. Magelang Tengah, Kota Magelang, Jawa Tengah 56112</p>
+        <p>WhatsApp 0895-3781-42009</p>
+        <p>Buka Senin - Jumat : 08.00 – 17.00</p>
+      </div>
+      <div class="foot-col">
+        <h5>Toko</h5>
+        <ul>
+          <li><a href="index.html">Beranda</a></li>
+          <li><a href="produk.html">Produk</a></li>
+          <li><a href="tentang-kami.html">Tentang Kami</a></li>
+          <li><a href="lokasi-kontak.html">Lokasi &amp; Kontak</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Layanan</h5>
+        <ul>
+          <li><a href="#">Service Center</a></li>
+          <li><a href="#">Cek Garansi</a></li>
+          <li><a href="#">Cicilan 0%</a></li>
+          <li><a href="#">Konsultasi Perlengkapan IT</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Cabang Kami</h5>
+        <div class="branch-tags">
+          <span>Magelang</span><span>Semarang</span><span>Temanggung</span><span>Yogyakarta</span><span>Solo</span><span>Purwokerto</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 TOP Computer. Seluruh hak cipta dilindungi.</p>
+      <div class="soc-row">
+        <a href="https://www.instagram.com/tunggalcomputer_magelang/" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://www.tiktok.com/@tunggalid" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.5v5l5-2.5-5-2.5Z" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Keranjang belanja">
+  <div class="drawer-head">
+    <h3>Keranjang</h3>
+    <button class="icon-btn" id="drawerClose" aria-label="Tutup keranjang">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot" style="display:none;">
+    <div class="sum-row"><span>Subtotal</span><b id="cartTotal">Rp0</b></div>
+    <a href="#" class="btn btn-primary" style="width:100%;justify-content:center;" id="checkoutBtn">Checkout via WhatsApp</a>
+  </div>
+</aside>
+
+
+
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+  <span id="toastMsg">Ditambahkan ke keranjang</span>
+</div>
+
+
+<a class="wa-fab" href="https://wa.me/62895378142009?text=Halo%20Tunggal%20Computer%2C%20saya%20mau%20tanya%20produk." target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp" id="waFab">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.1.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5s-.6-1.5-.9-2c-.2-.5-.5-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2z" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+</a>
+
+
+<script src="main.js"></script>
+</body>
+</html>

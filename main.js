@@ -1,3 +1,8 @@
+/* ================= HELPER MULTI-HALAMAN ================= */
+/* Script yang sama dipakai di semua halaman, jadi elemen yang tidak ada di halaman tertentu dilewati. */
+const IS_SHOP = !!document.getElementById("prodGrid");
+const on = (id, evt, fn) => { const el = document.getElementById(id); if(el) el.addEventListener(evt, fn); };
+
 /* ================= DATA ================= */
 const ICONS = {
   cpu: '<path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="10" y="10" width="4" height="4"/>',
@@ -77,6 +82,7 @@ const money = n => "Rp" + n.toLocaleString("id-ID");
 
 function renderCategories(){
   const grid = document.getElementById("catGrid");
+  if(!grid) return;
   grid.innerHTML = CATEGORIES.map(c => `
     <div class="cat-card" role="button" tabindex="0" data-cat="${c.name}" aria-label="Lihat produk ${c.name}">
       <div class="ci">${iconSvg(c.icon)}</div>
@@ -212,14 +218,14 @@ function mountProducts(list, emptyMsg){
 }
 
 /* satu listener untuk seluruh grid: tombol keranjang vs buka detail */
-document.getElementById("prodGrid").addEventListener("click", e => {
+on("prodGrid", "click", e => {
   if(e.target.closest("[data-reset]")){ resetFilters(); return; }
   const add = e.target.closest(".add-btn");
   if(add){ addToCart(parseInt(add.dataset.idx)); return; }
   const card = e.target.closest(".prod-card");
   if(card) openProduct(parseInt(card.dataset.idx));
 });
-document.getElementById("prodGrid").addEventListener("keydown", e => {
+on("prodGrid", "keydown", e => {
   if((e.key === "Enter" || e.key === " ") && e.target.matches(".prod-name")){
     e.preventDefault();
     openProduct(parseInt(e.target.closest(".prod-card").dataset.idx));
@@ -263,11 +269,11 @@ function resetFilters(){
   syncControls();
   renderProducts();
 }
-document.getElementById("priceFilter").addEventListener("change", e => { activePrice = e.target.value; renderProducts(); });
-document.getElementById("sortSelect").addEventListener("change", e => { activeSort = e.target.value; renderProducts(); });
-document.getElementById("resetFilters").addEventListener("click", resetFilters);
+on("priceFilter", "change", e => { activePrice = e.target.value; renderProducts(); });
+on("sortSelect", "change", e => { activeSort = e.target.value; renderProducts(); });
+on("resetFilters", "click", resetFilters);
 
-document.getElementById("catFilter").addEventListener("click", e => {
+on("catFilter", "click", e => {
   const btn = e.target.closest(".cat-chip");
   if(!btn) return;
   setCategory(btn.dataset.cat);
@@ -338,7 +344,7 @@ const WARRANTY = {
 
 const pm = document.getElementById("pm");
 const pmBody = document.getElementById("pmBody");
-const pmDialog = pm.querySelector(".pm-dialog");
+const pmDialog = pm ? pm.querySelector(".pm-dialog") : null;
 let pmIdx = null, pmLastFocus = null;
 
 function openProduct(idx){
@@ -394,7 +400,7 @@ function openProduct(idx){
 }
 
 function closeProduct(){
-  if(!pm.classList.contains("open")) return;
+  if(!pm || !pm.classList.contains("open")) return;
   pm.classList.remove("open");
   pm.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
@@ -402,7 +408,7 @@ function closeProduct(){
   pmIdx = null;
 }
 
-pm.addEventListener("click", e => {
+if(pm) pm.addEventListener("click", e => {
   if(e.target.closest("[data-close]")){ closeProduct(); return; }
   if(e.target.closest("[data-pm-add]")){
     const idx = pmIdx;
@@ -411,7 +417,7 @@ pm.addEventListener("click", e => {
   }
 });
 document.addEventListener("keydown", e => {
-  if(!pm.classList.contains("open")) return;
+  if(!pm || !pm.classList.contains("open")) return;
   if(e.key === "Escape"){ closeProduct(); return; }
   if(e.key === "Tab"){ /* jaga fokus tetap di dalam popup */
     const f = pmDialog.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
@@ -423,7 +429,7 @@ document.addEventListener("keydown", e => {
 });
 
 /* ---- tabs ---- */
-document.getElementById("tabRow").addEventListener("click", e => {
+on("tabRow", "click", e => {
   const btn = e.target.closest(".tab-btn");
   if(!btn) return;
   document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -436,6 +442,7 @@ let testiIdx = 0, testiTimer;
 function renderTestimonials(){
   const slidesEl = document.getElementById("testiSlides");
   const dotsEl = document.getElementById("testiDots");
+  if(!slidesEl || !dotsEl) return;
   slidesEl.innerHTML = TESTIMONIALS.map((t,i) => `
     <div class="testi-slide ${i===0?"active":""}" data-i="${i}">
       <div class="stars">★★★★★</div>
@@ -455,11 +462,23 @@ function resetTestiTimer(){
   clearInterval(testiTimer);
   testiTimer = setInterval(() => goTesti(testiIdx + 1), 5500);
 }
-document.getElementById("testiNext").addEventListener("click", () => goTesti(testiIdx + 1));
-document.getElementById("testiPrev").addEventListener("click", () => goTesti(testiIdx - 1));
+on("testiNext", "click", () => goTesti(testiIdx + 1));
+on("testiPrev", "click", () => goTesti(testiIdx - 1));
 
 /* ================= CART ================= */
+const CART_KEY = "topcomputer_cart";
 let cart = [];
+try {
+  const saved = JSON.parse(localStorage.getItem(CART_KEY));
+  if(Array.isArray(saved)){
+    cart = saved
+      .map(s => ({idx: PRODUCTS.findIndex(p => p.name === s.name), qty: parseInt(s.qty) || 0}))
+      .filter(c => c.idx >= 0 && c.qty > 0);
+  }
+} catch(e){ cart = []; }
+function saveCart(){
+  try { localStorage.setItem(CART_KEY, JSON.stringify(cart.map(c => ({name: PRODUCTS[c.idx].name, qty: c.qty})))); } catch(e){}
+}
 
 function addToCart(idx){
   const existing = cart.find(c => c.idx === idx);
@@ -481,6 +500,7 @@ function removeItem(idx){
   renderCart();
 }
 function renderCart(){
+  saveCart();
   const body = document.getElementById("drawerBody");
   const foot = document.getElementById("drawerFoot");
   const countEl = document.getElementById("cartCount");
@@ -530,11 +550,11 @@ const drawer = document.getElementById("drawer");
 const overlay = document.getElementById("overlay");
 function openDrawer(){ drawer.classList.add("open"); overlay.classList.add("open"); }
 function closeDrawer(){ drawer.classList.remove("open"); overlay.classList.remove("open"); }
-document.getElementById("cartToggle").addEventListener("click", openDrawer);
-document.getElementById("drawerClose").addEventListener("click", closeDrawer);
+on("cartToggle", "click", openDrawer);
+on("drawerClose", "click", closeDrawer);
 overlay.addEventListener("click", closeDrawer);
 
-document.getElementById("checkoutBtn").addEventListener("click", e => {
+on("checkoutBtn", "click", e => {
   e.preventDefault();
   if(!cart.length) return;
   const lines = cart.map(c => `- ${PRODUCTS[c.idx].name} x${c.qty}`).join("%0A");
@@ -561,15 +581,23 @@ searchToggle.addEventListener("click", () => {
   searchBox.classList.toggle("open");
   if(searchBox.classList.contains("open")) searchInput.focus();
 });
-searchInput.addEventListener("input", () => {
-  const term = searchInput.value.trim().toLowerCase();
-  document.getElementById("produk").scrollIntoView({behavior:"smooth", block:"start"});
-  if(term.length) renderSearch(term);
-  else { activeTag = "all"; activeCat = "all"; syncControls(); renderProducts(); }
-});
+if(IS_SHOP){
+  searchInput.addEventListener("input", () => {
+    const term = searchInput.value.trim().toLowerCase();
+    document.getElementById("produk").scrollIntoView({behavior:"smooth", block:"start"});
+    if(term.length) renderSearch(term);
+    else { activeTag = "all"; activeCat = "all"; syncControls(); renderProducts(); }
+  });
+} else {
+  searchInput.addEventListener("keydown", e => {
+    if(e.key !== "Enter") return;
+    const term = searchInput.value.trim();
+    if(term.length) window.location.href = "produk.html?q=" + encodeURIComponent(term);
+  });
+}
 
 /* ================= PROMO FORM ================= */
-document.getElementById("promoForm").addEventListener("submit", e => {
+on("promoForm", "submit", e => {
   e.preventDefault();
   showToast("Terima kasih! Email kamu sudah terdaftar untuk promo mingguan.");
   document.getElementById("promoEmail").value = "";
@@ -614,8 +642,8 @@ window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(fa
   }
   function go(i){ show(i); start(); }
 
-  document.getElementById("hsNext").addEventListener("click", () => go(cur + 1));
-  document.getElementById("hsPrev").addEventListener("click", () => go(cur - 1));
+  on("hsNext", "click", () => go(cur + 1));
+  on("hsPrev", "click", () => go(cur - 1));
   dots.forEach(d => d.addEventListener("click", () => go(parseInt(d.dataset.i))));
 
   slider.addEventListener("mouseenter", stop);
@@ -641,11 +669,53 @@ window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(fa
   start();
 })();
 
+/* ================= LIGHTBOX FOTO ================= */
+(function(){
+  const lb = document.getElementById("lightbox");
+  if(!lb) return;
+  const img = lb.querySelector("img");
+  const cap = lb.querySelector("figcaption");
+  let lastFocus = null;
+  function openLb(src, alt){
+    lastFocus = document.activeElement;
+    img.src = src; img.alt = alt; cap.textContent = alt;
+    lb.classList.add("open");
+    lb.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    lb.querySelector(".lb-close").focus();
+  }
+  function closeLb(){
+    if(!lb.classList.contains("open")) return;
+    lb.classList.remove("open");
+    lb.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    img.removeAttribute("src");
+    if(lastFocus && document.contains(lastFocus)) lastFocus.focus();
+  }
+  document.querySelectorAll("[data-lightbox]").forEach(btn =>
+    btn.addEventListener("click", () => openLb(btn.dataset.src, btn.dataset.alt)));
+  lb.addEventListener("click", e => { if(e.target.closest("[data-lb-close]")) closeLb(); });
+  document.addEventListener("keydown", e => { if(e.key === "Escape") closeLb(); });
+})();
+
 /* ================= INIT ================= */
 renderCategories();
-renderToolbar();
-syncControls();
-renderProducts("all");
 renderTestimonials();
 renderCart();
-resetTestiTimer();
+if(document.getElementById("testiSlides")) resetTestiTimer();
+
+if(IS_SHOP){
+  /* filter dari URL: produk.html?kategori=Laptop atau produk.html?q=epson */
+  const params = new URLSearchParams(window.location.search);
+  const kat = params.get("kategori");
+  if(kat && CATEGORIES.some(c => c.name === kat)) activeCat = kat;
+  renderToolbar();
+  syncControls();
+  renderProducts("all");
+  const q = (params.get("q") || "").trim();
+  if(q){
+    searchInput.value = q;
+    searchBox.classList.add("open");
+    renderSearch(q.toLowerCase());
+  }
+}
