@@ -528,6 +528,13 @@ main.page-main > section.hero{padding-top:76px;}
 @media (max-width:599px){
   .gallery{grid-template-columns:1fr;}
 }
+@media (min-width:980px){
+  /* video di kiri, dua foto bertumpuk di kanan, tinggi sama */
+  .gallery{grid-template-columns:1.9fr 1fr;}
+  .g-video{grid-column:1;grid-row:1 / span 2;max-width:none;justify-self:stretch;}
+  .g-photo{aspect-ratio:auto;}
+  .g-photo .g-btn{position:absolute;inset:0;}
+}
 
 /* ---------- lightbox ---------- */
 .lb{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px;}
