@@ -1,5 +1,4 @@
 /* ================= HELPER MULTI-HALAMAN ================= */
-/* Script yang sama dipakai di semua halaman, jadi elemen yang tidak ada di halaman tertentu dilewati. */
 const IS_SHOP = !!document.getElementById("prodGrid");
 const on = (id, evt, fn) => { const el = document.getElementById(id); if(el) el.addEventListener(evt, fn); };
 
@@ -177,7 +176,7 @@ document.addEventListener("error", e => {
   }
 }, true);
 
-/* ---- kartu produk ---- */
+/* ---- Kartu Produk ---- */
 function productCard(p){
   const idx = PRODUCTS.indexOf(p);
   return `
@@ -217,7 +216,7 @@ function mountProducts(list, emptyMsg){
   grid.innerHTML = list.map(productCard).join("");
 }
 
-/* satu listener untuk seluruh grid: tombol keranjang vs buka detail */
+/* Tombol Keranjang + Buka Detail */
 on("prodGrid", "click", e => {
   if(e.target.closest("[data-reset]")){ resetFilters(); return; }
   const add = e.target.closest(".add-btn");
@@ -232,7 +231,7 @@ on("prodGrid", "keydown", e => {
   }
 });
 
-/* ---- filter kategori utama (chip) ---- */
+/* ---- Filter Kategori Utama ---- */
 function renderCatFilter(){
   const wrap = document.getElementById("catFilter");
   const chip = (key, label, icon, count) => `
@@ -250,7 +249,7 @@ function setCategory(cat){
   renderProducts();
 }
 
-/* ---- filter harga & urutan ---- */
+/* ---- Filter Harga & Urutan ---- */
 function renderToolbar(){
   document.getElementById("priceFilter").innerHTML =
     PRICE_RANGES.map(r => `<option value="${r.key}">${r.label}</option>`).join("");
@@ -428,7 +427,7 @@ document.addEventListener("keydown", e => {
   }
 });
 
-/* ---- tabs ---- */
+/* ---- Tabs ---- */
 on("tabRow", "click", e => {
   const btn = e.target.closest(".tab-btn");
   if(!btn) return;
@@ -437,7 +436,7 @@ on("tabRow", "click", e => {
   renderProducts(btn.dataset.filter);
 });
 
-/* ---- testimonials ---- */
+/* ---- Testimonials ---- */
 let testiIdx = 0, testiTimer;
 function renderTestimonials(){
   const slidesEl = document.getElementById("testiSlides");
@@ -465,7 +464,7 @@ function resetTestiTimer(){
 on("testiNext", "click", () => goTesti(testiIdx + 1));
 on("testiPrev", "click", () => goTesti(testiIdx - 1));
 
-/* ================= CART ================= */
+/* ================= Cart ================= */
 const CART_KEY = "topcomputer_cart";
 let cart = [];
 try {
@@ -545,7 +544,7 @@ function renderCart(){
   });
 }
 
-/* drawer open/close */
+/* Drawer : Open + Close */
 const drawer = document.getElementById("drawer");
 const overlay = document.getElementById("overlay");
 function openDrawer(){ drawer.classList.add("open"); overlay.classList.add("open"); }
@@ -563,7 +562,7 @@ on("checkoutBtn", "click", e => {
   window.open(`https://wa.me/62895378142009?text=${msg}`, "_blank");
 });
 
-/* ================= TOAST ================= */
+/* ================= Toast ================= */
 let toastTimer;
 function showToast(msg){
   const toast = document.getElementById("toast");
@@ -573,7 +572,7 @@ function showToast(msg){
   toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
 }
 
-/* ================= SEARCH ================= */
+/* ================= Search ================= */
 const searchToggle = document.getElementById("searchToggle");
 const searchBox = document.getElementById("searchBox");
 const searchInput = document.getElementById("searchInput");
@@ -596,20 +595,20 @@ if(IS_SHOP){
   });
 }
 
-/* ================= PROMO FORM ================= */
+/* ================= Promo Form ================= */
 on("promoForm", "submit", e => {
   e.preventDefault();
   showToast("Terima kasih! Email kamu sudah terdaftar untuk promo mingguan.");
   document.getElementById("promoEmail").value = "";
 });
 
-/* ================= HEADER SCROLL ================= */
+/* ================= Header Scroll ================= */
 const header = document.getElementById("siteHeader");
 window.addEventListener("scroll", () => {
   header.classList.toggle("scrolled", window.scrollY > 10);
 }, {passive:true});
 
-/* ================= MOBILE MENU ================= */
+/* ================= Mobile Menu ================= */
 const menuToggle = document.getElementById("menuToggle");
 const mainNav = document.querySelector("nav.main-nav");
 
@@ -621,7 +620,7 @@ menuToggle.addEventListener("click", () => setMenu(!mainNav.classList.contains("
 mainNav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => setMenu(false)));
 window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(false); });
 
-/* ================= HERO SLIDER ================= */
+/* ================= Hero Slider ================= */
 (function(){
   const slider = document.getElementById("heroSlider");
   if(!slider) return;
@@ -649,7 +648,7 @@ window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(fa
   slider.addEventListener("mouseenter", stop);
   slider.addEventListener("mouseleave", start);
 
-  /* swipe on touch screens */
+  /* Swipe : Touch Screens */
   let x0 = null;
   slider.addEventListener("touchstart", e => { x0 = e.touches[0].clientX; stop(); }, {passive:true});
   slider.addEventListener("touchend", e => {
@@ -660,7 +659,7 @@ window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(fa
     x0 = null;
   }, {passive:true});
 
-  /* keyboard arrows when slider is focused */
+  /* Keyboard Arrows */
   slider.addEventListener("keydown", e => {
     if(e.key === "ArrowRight") go(cur + 1);
     if(e.key === "ArrowLeft") go(cur - 1);
@@ -669,7 +668,7 @@ window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(fa
   start();
 })();
 
-/* ================= LIGHTBOX FOTO ================= */
+/* ================= Lightbox Foto ================= */
 (function(){
   const lb = document.getElementById("lightbox");
   if(!lb) return;
@@ -698,7 +697,7 @@ window.addEventListener("resize", () => { if(window.innerWidth > 980) setMenu(fa
   document.addEventListener("keydown", e => { if(e.key === "Escape") closeLb(); });
 })();
 
-/* ================= INIT ================= */
+/* ================= Init ================= */
 renderCategories();
 renderTestimonials();
 renderCart();
